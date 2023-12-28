@@ -1,7 +1,8 @@
-import { Init, Inject, Provide } from '@midwayjs/core';
+import { Init, Inject, Provide, Scope, ScopeEnum } from '@midwayjs/core';
 import { SmsInterface } from './sms.interface';
 
 @Provide()
+@Scope(ScopeEnum.Request, { allowDowngrade: true })
 export class AsyncJobService implements SmsInterface {
   @Inject('AliSMSService')
   smsService: SmsInterface;
@@ -15,15 +16,6 @@ export class AsyncJobService implements SmsInterface {
     this.jobs = [];
     this.stopFlog = false;
     this.doneFlag = false;
-
-    while (!this.stopFlog) {
-      if (!this.jobs.length) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-      await this.sendSms();
-    }
-
-    this.doneFlag = true;
   }
   async addJob(phoneNumber: string) {
     if (this.stopFlog) {
@@ -33,9 +25,16 @@ export class AsyncJobService implements SmsInterface {
   }
 
   async sendSms(): Promise<void> {
-    for (const phoneNumber of this.jobs) {
-      await this.smsService.sendSms(phoneNumber);
+    while (!this.stopFlog) {
+      if (!this.jobs.length) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+      for (const phoneNumber of this.jobs) {
+        await this.smsService.sendSms(phoneNumber);
+      }
     }
+
+    this.doneFlag = true;
   }
   stop() {
     this.stopFlog = true;

@@ -1,4 +1,11 @@
-import { Configuration, App, Config, ALL, Inject } from '@midwayjs/core';
+import {
+  Configuration,
+  App,
+  Config,
+  ALL,
+  Inject,
+  ILogger,
+} from '@midwayjs/core';
 import * as koa from '@midwayjs/koa';
 import * as validate from '@midwayjs/validate';
 import * as info from '@midwayjs/info';
@@ -34,6 +41,9 @@ export class MainConfiguration {
   @Inject()
   jobService: AsyncJobService;
 
+  @Inject()
+  logger: ILogger;
+
   async onReady() {
     // add middleware
     this.app.useMiddleware([ReportMiddleware]);
@@ -49,6 +59,7 @@ export class MainConfiguration {
   }
 
   async onStop() {
+    this.logger.info('on stop');
     // 在这里可以做一些收尾工作
     // 检测所有异步任务做完再退出
     this.jobService.stop();
@@ -56,5 +67,9 @@ export class MainConfiguration {
     while (this.jobService.done()) {
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
+
+    // todo beforeStop
+
+    this.logger.info('on stop done');
   }
 }

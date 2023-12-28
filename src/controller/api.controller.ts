@@ -1,4 +1,4 @@
-import { Inject, Controller, Get, Query, Post } from '@midwayjs/core';
+import { Inject, Controller, Get, Query, Post, Body } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { UserService } from '../service/user.service';
 import { SmsInterface } from '../service/sms.interface';
@@ -23,7 +23,7 @@ export class APIController {
   }
 
   @Post('/send_sms')
-  async sendSms() {
-    await this.smsService.sendSms();
+  async sendSms(@Body('phone') phone: string) {
+    await this.smsService.sendSms(phone);
   }
 }
