@@ -3,7 +3,7 @@ import { SmsInterface } from './sms.interface';
 
 @Provide('AliSMSService')
 export class AliSMSService implements SmsInterface {
-  async sendSms(): Promise<void> {
-    console.log('ali: send sms');
+  async sendSms(phone: string): Promise<void> {
+    console.log('ali: send sms to ' + phone);
   }
 }

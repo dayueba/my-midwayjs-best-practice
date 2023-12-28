@@ -8,6 +8,7 @@ import { join } from 'path';
 import { ReportMiddleware } from './middleware/report.middleware';
 import { ValidateService } from '@midwayjs/validate';
 import { ConfigModel } from './model/config';
+import { AsyncJobService } from './service/async_job.service';
 
 @Configuration({
   imports: [
@@ -30,6 +31,9 @@ export class MainConfiguration {
   @Inject()
   validateService: ValidateService;
 
+  @Inject()
+  jobService: AsyncJobService;
+
   async onReady() {
     // add middleware
     this.app.useMiddleware([ReportMiddleware]);
@@ -42,5 +46,15 @@ export class MainConfiguration {
         allowUnknown: true, // 要允许未定义的属性，因为有些不是自己定义的,是框架启动后加上的
       },
     });
+  }
+
+  async onStop() {
+    // 在这里可以做一些收尾工作
+    // 检测所有异步任务做完再退出
+    this.jobService.stop();
+
+    while (this.jobService.done()) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
   }
 }
