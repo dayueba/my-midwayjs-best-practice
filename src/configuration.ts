@@ -16,11 +16,13 @@ import { ReportMiddleware } from './middleware/report.middleware';
 import { ValidateService } from '@midwayjs/validate';
 import { ConfigModel } from './model/config';
 import { AsyncJobService } from './service/async_job.service';
+import * as otel from '@midwayjs/otel';
 
 @Configuration({
   imports: [
     koa,
     validate,
+    otel,
     {
       component: info,
       enabledEnvironment: ['local'],

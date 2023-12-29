@@ -10,7 +10,14 @@
     "@midwayjs/info": "^3.12.0",
     "@midwayjs/koa": "^3.12.0",
     "@midwayjs/logger": "^2.14.0",
-    "@midwayjs/validate": "^3.12.0"
+    "@midwayjs/otel": "^3.13.9",
+    "@midwayjs/validate": "^3.12.0",
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.40.2",
+    "@opentelemetry/exporter-jaeger": "^1.19.0",
+    "@opentelemetry/propagator-jaeger": "^1.19.0",
+    "@opentelemetry/sdk-node": "^0.46.0",
+    "@opentelemetry/semantic-conventions": "^1.19.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "^2.0.0",
@@ -29,7 +36,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node ./bootstrap.js",
-    "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
+    "dev": "cross-env NODE_ENV=local midway-bin dev --ts --entryFile=bootstrap.js",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
