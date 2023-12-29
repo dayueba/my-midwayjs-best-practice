@@ -64,11 +64,9 @@ export class MainConfiguration {
     // 检测所有异步任务做完再退出
     this.jobService.stop();
 
-    while (this.jobService.done()) {
+    while (!this.jobService.done()) {
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
-
-    // todo beforeStop
 
     this.logger.info('on stop done');
   }
