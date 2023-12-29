@@ -69,5 +69,7 @@ export class MainConfiguration {
     }
 
     this.logger.info('on stop done');
+
+    // todo 后续想优化的话，可以遍历所有的service 如果有stop方法的话，则并发执行
   }
 }

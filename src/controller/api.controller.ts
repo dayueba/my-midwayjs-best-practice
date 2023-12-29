@@ -13,6 +13,8 @@ export class APIController {
 
   // 注入不同的第三方短信服务，后面切换的时候注入别的service就好
   // todo 但是这里有个问题，这里没法校验 AliSMSService 是否实现了interface
+  // 需要自己手动去查 AliSMSService 是否实现了接口
+  // todo 后续可以加个校验
   @Inject('AliSMSService')
   smsService: SmsInterface; // 这里是接口
 
