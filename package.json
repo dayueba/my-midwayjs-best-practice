@@ -17,7 +17,9 @@
     "@opentelemetry/exporter-jaeger": "^1.19.0",
     "@opentelemetry/propagator-jaeger": "^1.19.0",
     "@opentelemetry/sdk-node": "^0.46.0",
-    "@opentelemetry/semantic-conventions": "^1.19.0"
+    "@opentelemetry/semantic-conventions": "^1.19.0",
+    "lodash": "^4.17.21",
+    "squirrelly": "^9.0.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "^2.0.0",

@@ -13,3 +13,15 @@ async onStop() {
 // 注意2: 耗时长的任务不建议使用@Destroy() 装饰器
 // 因为是异步退出，所以框架退出后，会强制退出
 ```
+4. 记录操作日志的最佳实践
+```javascript
+@Get('/test_log')
+@LogRecord({
+  successTemplate:
+    '修改了订单的配送地址：从“{{@async getOldAddressByOrderNo(it.ctx.query.orderNo) /}}”, 修改到“{{it.ctx.query.address}}”',
+  bizNo: '${ctx.query.orderNo}',
+})
+async updateAddress(@Query() query): Promise<any> {
+  return query;
+}
+```
