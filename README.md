@@ -25,3 +25,4 @@ async updateAddress(@Query() query): Promise<any> {
   return query;
 }
 ```
+5. 通过orm记录慢查询日志

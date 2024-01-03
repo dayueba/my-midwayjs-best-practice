@@ -27,12 +27,14 @@ import { Context } from '@midwayjs/koa';
 import { LogRecordOptions } from './interface';
 import * as Sqrl from 'squirrelly';
 import { FuncFactory } from './factory/func.factory';
+import * as orm from '@midwayjs/typeorm';
 
 @Configuration({
   imports: [
     koa,
     validate,
     otel,
+    orm,
     {
       component: info,
       enabledEnvironment: ['local'],
