@@ -26,3 +26,4 @@ async updateAddress(@Query() query): Promise<any> {
 }
 ```
 5. 通过orm记录慢查询日志
+   1. 有坑：慢查询是info日志，如果开启，那么query的都会记录在日志中，日志数量暴涨。如果需要只打印慢查询，可能需要自定义慢查询日志记录器。

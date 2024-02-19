@@ -1,13 +1,18 @@
-import { Provide } from '@midwayjs/core';
+import { Inject, Provide } from '@midwayjs/core';
 import { IUserOptions } from '../interface';
 import { UsersEntity } from '../entity/user.entity';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
+import { IUserDao } from '../dao/user.dao.interfce';
 
 @Provide()
 export class UserService {
   @InjectEntityModel(UsersEntity)
   userModel: Repository<UsersEntity>;
+
+  @Inject('UserDao')
+  userDao: IUserDao;
+
   async getUser(options: IUserOptions) {
     // return {
     // uid: options.uid,
@@ -18,5 +23,9 @@ export class UserService {
     return await this.userModel.findOneBy({
       id: options.uid,
     });
+  }
+
+  async findAll() {
+    return await this.userDao.findAll();
   }
 }
