@@ -4,6 +4,9 @@ import { UsersEntity } from '../entity/user.entity';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { IUserDao } from '../dao/user.dao.interfce';
+import { Name } from '../vo/name';
+import { PhoneNumber } from '../vo/phone';
+import { RuleType, Valid } from '@midwayjs/validate';
 
 @Provide()
 export class UserService {
@@ -27,5 +30,12 @@ export class UserService {
 
   async findAll() {
     return await this.userDao.findAll();
+  }
+
+  async findByNameAndPhone(
+    @Valid(RuleType.object().required()) name: Name,
+    @Valid(RuleType.object().required()) phone: PhoneNumber
+  ) {
+    console.log(name, phone);
   }
 }
